@@ -31,3 +31,18 @@ def crawllink(seedurl, linkregex):
     Crawl from the given seed URL seedurl following links
     matched by linkregex.
     """ 
+    queue = [seedurl]
+    while queue:
+        url = queue.pop()
+        html = downloadurl(url)
+        for link in getlinks(htmls): # Filter for links matching regex.
+            if re.match(linkregex, link):
+                quete.append(link)
+
+def getlinks(html):
+    """
+    Return a list of links from html.
+    """
+    # Regex to extract all links from a webpage.
+    webpageregex = re.compile("<a[^>]+href=["\"]*.*?)["\"], re.IGNORECASE)
+    
