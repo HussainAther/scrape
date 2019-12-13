@@ -1,5 +1,6 @@
 import re
 import urllib2
+import urlparse
 
 """
 Download a webpage.
@@ -52,3 +53,13 @@ class Throttle:
     """
     Add a delay between downloads to the same domain.
     """
+    def __init__(self, delay):
+        self.delay = delay # amount of time delay between downloads to each domain
+        self.domains = {} # timestamp when domain was last accessed
+        
+    def wait(self, url):
+        """
+        Wait for URL to load.
+        """
+        domain = urlparse.urlparse(url).netloc
+         
