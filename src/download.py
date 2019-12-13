@@ -45,4 +45,5 @@ def getlinks(html):
     """
     # Regex to extract all links from a webpage.
     webpageregex = re.compile("<a[^>]+href=["\"]*.*?)["\"], re.IGNORECASE)
-    
+    # Return list of all links from the webpage.
+    return webpageregex.findall(html) 
