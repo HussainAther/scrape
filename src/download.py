@@ -10,4 +10,8 @@ def downloadurl(url):
     """
     print("Downloading:", url)
     try:
-        html = url
+        html = urllib2.urlopen(url).read()
+    except urllib2.URLError:
+        print("Download error:", urllib2.URLError.reason)
+        html = None
+    return html
