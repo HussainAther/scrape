@@ -15,3 +15,10 @@ def downloadurl(url):
         print("Download error:", urllib2.URLError.reason)
         html = None
     return html
+
+def crawlsitemap(url):
+    """
+    Sitemap crawler
+    """
+    sitemap = downloadurl(url) # Download the sitemap file.
+    links = re.findall("<loc>*.*?)</loc>", sitemap) #Extract the sitemap links.
