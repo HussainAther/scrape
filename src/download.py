@@ -21,4 +21,7 @@ def crawlsitemap(url):
     Sitemap crawler
     """
     sitemap = downloadurl(url) # Download the sitemap file.
-    links = re.findall("<loc>*.*?)</loc>", sitemap) #Extract the sitemap links.
+    links = re.findall("<loc>*.*?)</loc>", sitemap) # Extract the sitemap links.
+    for link in links:
+        html = downloadurl(link)
+        
