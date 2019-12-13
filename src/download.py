@@ -62,4 +62,9 @@ class Throttle:
         Wait for URL to load.
         """
         domain = urlparse.urlparse(url).netloc
-         
+        lastaccessed = self.domains.get(domain)
+        if self.delay > 0 and lastaccessed is not None:
+            sleepsecs = self.delay - (datetime.datetime.now() - lastaccessed).seconds
+            if sleepsecs > 0: # domain accessed recently
+                time.sleep(sleepsecs) # sleep for a bit
+            self.domains[domain] = datetime.datetime.now() # Update the last accessed time.
