@@ -8,4 +8,6 @@ def downloadurl(url):
     """
     Pass a URL to download it and return the HTML.
     """
-    return urllib2.urlopen(url).read()
+    print("Downloading:", url)
+    try:
+        html = url
