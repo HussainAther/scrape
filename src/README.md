@@ -1,3 +1,6 @@
+* `download.py` : This script has ways to download infomration from scraped results.
+    - Usage: `python download.py`
+
 * `indeedScrape.py` : This script scrapes Indeed for data science job postings for a given list of keywords and list of locations.
     - Usage: `python indeedScrape.py -k keywordsfile -l locationfile -r radius -m pagelimit`
     - Example usage: `python indeedScrape.py -k ../../data/indeed/keywords.txt -l ../../data/indeed/cities.txt -r 5 -m 2`
