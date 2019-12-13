@@ -1,3 +1,4 @@
+import re
 import urllib2
 
 """
@@ -24,4 +25,9 @@ def crawlsitemap(url):
     links = re.findall("<loc>*.*?)</loc>", sitemap) # Extract the sitemap links.
     for link in links:
         html = downloadurl(link)
-        
+      
+def crawllink(seedurl, linkregex):
+    """
+    Crawl from the given seed URL seedurl following links
+    matched by linkregex.
+    """ 
