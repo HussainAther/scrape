@@ -47,3 +47,8 @@ def getlinks(html):
     webpageregex = re.compile("<a[^>]+href=["\"]*.*?)["\"], re.IGNORECASE)
     # Return list of all links from the webpage.
     return webpageregex.findall(html) 
+
+class Throttle:
+    """
+    Add a delay between downloads to the same domain.
+    """
