@@ -3,7 +3,7 @@ import urllib2
 import urlparse
 
 """
-Download a webpage.
+This script contains functions and code to download a webpage.
 """
 
 def downloadurl(url):
@@ -68,3 +68,4 @@ class Throttle:
             if sleepsecs > 0: # domain accessed recently
                 time.sleep(sleepsecs) # sleep for a bit
             self.domains[domain] = datetime.datetime.now() # Update the last accessed time.
+
