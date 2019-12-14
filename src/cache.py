@@ -33,3 +33,5 @@ class DiskCache:
         """
         Create  file system path for this URL.
         """
+        components = ulp.urlsplit(url)
+        path = components.path # Append index.html to empty paths
