@@ -10,20 +10,32 @@ try:
 except ImportError:
     import robotparser as rp
 
+# Same for urllib2
+try:
+    import urllib.request as request
+    import urllib.request.urlopen as urlopen
+    import urllib.parse as parse
+    import urllib.error as error
+except ImportError:
+    import urllib2
+
 """
 This script contains functions and code to download a webpage.
 """
 
-def downloadurl(url):
+
+
+def downloadurl(url, useragent="wswp", proxy=None, retries=2):
     """
     Pass a URL to download it and return the HTML.
+    You can also run this function with a speciifc useragent, proxy, and 
+    different number of retries.
     """
     print("Downloading:", url)
     try:
         html = urllib2.urlopen(url).read()
     except urllib2.URLError:
-        print("Download error:", urllib2.URLError.reason)
-        html = None
+        html = urlopen(url).read()
     return html
 
 def crawlsitemap(url):
