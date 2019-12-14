@@ -64,6 +64,7 @@ def getlinks(html):
 class Throttle:
     """
     Add a delay between downloads to the same domain.
+    We do this by "sleeping" between consecutive downloads.
     """
     def __init__(self, delay):
         self.delay = delay # amount of time delay between downloads to each domain
@@ -74,9 +75,9 @@ class Throttle:
         Wait for URL to load.
         """
         domain = urlparse.urlparse(url).netloc
-        lastaccessed = self.domains.get(domain)
-        if self.delay > 0 and lastaccessed is not None:
-            sleepsecs = self.delay - (datetime.datetime.now() - lastaccessed).seconds
+        lastaccessed = self.domains.get(domain) # when the url was last accessed
+        if self.delay > 0 and lastaccessed is not None: # if we have set a delay
+            sleepsecs = self.delay - (datetime.datetime.now() - lastaccessed).seconds # calculate how long we sleep
             if sleepsecs > 0: # domain accessed recently
                 time.sleep(sleepsecs) # sleep for a bit
             self.domains[domain] = datetime.datetime.now() # Update the last accessed time.
