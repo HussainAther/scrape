@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import re
 import csv
+import re
 import time
+
 try: 
     from PySide.QtGui import QApplication
     from PySide.QtCore import QUrl, QEventLoop, QTimer
@@ -13,16 +14,23 @@ except ImportError:
     from PyQt4.QtWebKit import QWebView
 import lxml.html
 
-  
 class BrowserRender(QWebView):  
+    """
+    Create a rendering of the browser for website interaction.
+    """
     def __init__(self, display=True):
+        """
+        Initialize the display with the app.
+        """
         self.app = QApplication([])
         QWebView.__init__(self)
         if display:
             self.show() # show the browser
 
     def open(self, url, timeout=60):
-        """Wait for download to complete and return result"""
+        """
+        Wait for download to complete and return result.
+        """
         loop = QEventLoop()
         timer = QTimer()
         timer.setSingleShot(True)
@@ -40,7 +48,9 @@ class BrowserRender(QWebView):
             print 'Request timed out:', url
 
     def html(self):
-        """Shortcut to return the current HTML"""
+        """
+        Shortcut to return the current HTML.
+        """
         return self.page().mainFrame().toHtml()
 
     def find(self, pattern):
