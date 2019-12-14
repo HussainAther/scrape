@@ -14,7 +14,7 @@ class DiskCache:
     Map a URL to a filename that will be used to save the 
     downloaded URL to the disk cache.
     """
-    def __init__(self, cachedir="cache"):
+    def __init__(self, cachedir="output/cache"):
         """
         Initialize the cache directory
         """
@@ -35,3 +35,12 @@ class DiskCache:
         """
         components = ulp.urlsplit(url)
         path = components.path # Append index.html to empty paths
+        if not path:
+            path = "/index.html"
+        elif path.endswith("/"):
+            path += "index.html"
+        filename = components.netloc + path + components.query
+        # Replace invalid characters.
+        filename = re.sub("[^/0-9a-zA-Z\-.,;_]", "_", filename)
+        filename = "/".join(segment[:250] for segment in filename.split("/"))
+        return os.path.join(self.cachedir,filename) 
