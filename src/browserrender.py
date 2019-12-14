@@ -54,16 +54,22 @@ class BrowserRender(QWebView):
         return self.page().mainFrame().toHtml()
 
     def find(self, pattern):
-        """Find all elements that match the pattern"""
+        """
+        Find all elements that match the pattern.
+        """
         return self.page().mainFrame().findAllElements(pattern)
 
     def attr(self, pattern, name, value):
-        """Set attribute for matching elements"""
+        """
+        Set attribute for matching elements.
+        """
         for e in self.find(pattern):
             e.setAttribute(name, value)
 
     def text(self, pattern, value):
-        """Set attribute for matching elements"""
+        """
+        Set attribute for matching elements.
+        """
         for e in self.find(pattern):
             e.setPlainText(value)
 
