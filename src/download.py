@@ -35,22 +35,28 @@ def crawlsitemap(url):
     for link in links:
         html = downloadurl(link)
       
-def crawllink(seedurl, linkregex, agentname, rp):
+def crawllink(seedurl, linkregex, agentname, rp, maxdepth=5):
     """
     Crawl from the given seed URL seedurl following links
     matched by linkregex for an agentname of the crawler and
-    initialized robot parser.
+    initialized robot parser. You can add a maxdepth to determine
+    how many pages you will crawl.
     """ 
-    queue = [seedurl]
+    queue = [seedurl] # list of URLs to crawl
+    seen = set(queue) # list of seen links
     while queue:
         url = queue.pop()
         html = downloadurl(url)
         if rp.can_fetch(agentname, url)
             for link in getlinks(htmls): # Filter for links matching regex.
                 if re.match(linkregex, link):
-                    queue.append(link)
+                    link = urlparse.urljoin(seedurl, link)
+                    if link not in seen: # Check if we hvaen't seen this link.
+                        seen.add(link) # Add it to the list of seen links.
+                        queue.append(link) # Add it to the queue.
         else:
             print("Blocked by robots.")
+             
 
 def getlinks(html):
     """
@@ -64,7 +70,7 @@ def getlinks(html):
 class Throttle:
     """
     Add a delay between downloads to the same domain.
-    We do this by "sleeping" between consecutive downloads.
+    You do this by "sleeping" between consecutive downloads.
     """
     def __init__(self, delay):
         self.delay = delay # amount of time delay between downloads to each domain
