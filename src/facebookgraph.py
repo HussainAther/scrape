@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import json
 import pprint
+import sys
 
 from download import Downloader
 
