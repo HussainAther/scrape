@@ -1,3 +1,4 @@
+import random
 import re
 import urllib2
 import urlparse
@@ -131,3 +132,31 @@ class Downloader:
         """
         Initialize the throttle delay while downloading.
         """
+        self.throttle = Throttle(delay)
+        self.useragent = useragent
+        self.proxies = proxies
+        self.retries = retries
+        self.cache = cache
+    
+    def __call__(self, url):
+        """
+        Callback to check each URL.
+        """
+        result = None
+        if self.cache:
+            try:
+                result = self.cache[url]
+            except KeyError as e:
+                pass # if there's no URL available in the cache
+        else:
+            if self.retries > 0 and 500 <= result["code"] < 600:
+                # Server error means you can re-download.
+                result = None
+        if result is None:
+            self.throttle.wait(url)
+            proxy = random.choice(self.proxies) if self.proxies else None
+            headers = {"User-agent": self.useragent}
+            result = self.downloadurl(url, headers, proxy, self.retries)
+        if self.cache:
+            self.cache[url] = result
+        return result["html"] 
