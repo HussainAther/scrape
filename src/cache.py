@@ -60,4 +60,10 @@ class DiskCache:
     def __setitem__(self, url, result):
         """
         Save data to disk for this URL.
-        """ 
+        """
+        path = self.urltopath(url) 
+        folder = os.path.dirname(path)
+        if not os.path.exists(folder):
+            os.makedir(folder)
+        with open(path, "wb") as fp:
+            fp.write(picke.dumps(result))
