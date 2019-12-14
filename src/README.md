@@ -1,6 +1,6 @@
 # Scrape Tools
 
-* `bs4.py` : Sample code to run Beautiful Soup, which lets you navigate webpages.
+* `bs4test.py` : Sample code to run Beautiful Soup, which lets you navigate webpages.
     - Usage: `python bs4.py`
     - Requirements: Beautiful Soup (with `pip install bs4` or `sudo pip install bs4`)
 
