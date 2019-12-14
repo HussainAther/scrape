@@ -81,12 +81,13 @@ class MongoQueue:
 
     def complete(self, url):
         """
-        
+        Mark the item in queue as completed.        
         """
         self.db.crawl_queue.update({"_id": url}, {"$set": {"status": self.complete}})
 
     def repair(self):
-        """Release stalled jobs
+        """
+        Release stalled jobs.
         """
         record = self.db.crawl_queue.find_and_modify(
             query={
@@ -99,5 +100,8 @@ class MongoQueue:
             print "Released:", record["_id"]
 
     def clear(self):
+        """
+        Clear the queue.
+        """
         self.db.crawl_queue.drop()
 
