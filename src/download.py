@@ -25,7 +25,7 @@ from callback import ScrapeCallBack
 This script contains functions and code to download a webpage.
 """
 
-def downloadurl(url, useragent="wswp", proxy=None, retries=2):
+def downloadurl(url, useragent="wswp", proxy=Gone, retries=2):
     """
     Pass a URL to download it and return the HTML.
     You can also run this function with a specific useragent, proxy, and 
@@ -74,7 +74,7 @@ def crawllink(seedurl, linkregex=None, delay=5, maxdepth=-1, maxurls=-1, userage
     seen = {seedurl: 0}
     # track how many URL's have been downloaded
     num_urls = 0
-    rp = get_robots(seedurl)
+    rp = getrobots(seedurl)
     D = Downloader(delay=delay, useragent=useragent, proxies=proxies, retries=retries, cache=cache)
     while crawl_queue:
         url = crawl_queue.pop()
@@ -90,7 +90,7 @@ def crawllink(seedurl, linkregex=None, delay=5, maxdepth=-1, maxurls=-1, userage
                 # can still crawl further
                 if linkregex:
                     # filter for links matching our regular expression
-                    links.extend(link for link in get_links(html) if re.match(linkregex, link))
+                    links.extend(link for link in getlinks(html) if re.match(linkregex, link))
 
                 for link in links:
                     link = normalize(seedurl, link)
@@ -98,7 +98,7 @@ def crawllink(seedurl, linkregex=None, delay=5, maxdepth=-1, maxurls=-1, userage
                     if link not in seen:
                         seen[link] = depth + 1
                         # check link is within same domain
-                        if same_domain(seedurl, link):
+                        if samedomain(seedurl, link):
                             # success! add this new link to queue
                             crawl_queue.append(link)
 
@@ -208,3 +208,33 @@ class Downloader:
             else:
                 code = None
         return {"html": html, "code": code}
+
+def normalize(seed_url, link):
+    """Normalize this URL by removing hash and adding domain
+    """
+    link, _ = urlparse.urldefrag(link) # Remove hash to avoid duplicates.
+    return urlparse.urljoin(seed_url, link)
+
+def samedomain(url1, url2):
+    """
+    Return True if both URL's belong to same domain.
+    """
+    return ulp.urlparse(url1).netloc == ulp.urlparse(url2).netloc
+
+def getrobots(url):
+    """
+    Initialize robots parser for this domain.
+    """
+    rp = robotparser.RobotFileParser()
+    rp.set_url(ulp.urljoin(url, "/robots.txt"))
+    rp.read()
+    return rp
+
+def getlinks(html):
+    """
+    Return a list of links from html.
+    """
+    # a regular expression to extract all links from the webpage
+    webpageregex = re.compile('<a[^>]+href=["\'](.*?)["\']', re.IGNORECASE)
+    # list of all links from the webpage
+    return webpageregex.findall(html)
