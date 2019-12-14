@@ -41,4 +41,6 @@ def lxmlscraper(html):
     """
     tree = lxml.html.fromstring(html)
     results = {}
-    for field 
+    for field in fields:
+        results[field] = tree.cssselect("table > tr#plcaes_%s_row > td.w2p_fw" % field)[0].text_content()
+    return results 
