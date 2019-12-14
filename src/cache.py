@@ -29,6 +29,17 @@ class DiskCache:
         
         self.cachedir = cachedir
         self.maxlen = maxlen
+
+    def __delitem__(self, url):
+        """
+        Remove the value at this key and any empty parent sub-directories.
+        """
+        path = self._key_path(url)
+        try:
+            os.remove(path)
+            os.removedirs(os.path.dirname(path))
+        except OSError:
+            pass
     
     def urltopath(self, url):
         """
