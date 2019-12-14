@@ -12,18 +12,15 @@ except ImportError:
 
 # Same for urllib2
 try:
-    import urllib.request as request
-    import urllib.request.urlopen as urlopen
-    import urllib.parse as parse
-    import urllib.error as error
+    import urllib as ul
+    import urllib.parse as ulp 
 except ImportError:
-    import urllib2
+    import urllib2 as ul
+    from urlparse import urlparse as ulp
 
 """
 This script contains functions and code to download a webpage.
 """
-
-
 
 def downloadurl(url, useragent="wswp", proxy=None, retries=2):
     """
@@ -32,10 +29,23 @@ def downloadurl(url, useragent="wswp", proxy=None, retries=2):
     different number of retries.
     """
     print("Downloading:", url)
+    headers = {"User-agent": useragent} # Use the agent name as a header.
+    request = ul.request(url, headers=headers) # Form the request.
+    opener = ul.request.opener() 
+    html = ul.request.urlopen(url).read()
+    if proxy: # if we are using a proxy
+        proxyparams = {ulp.urlparse(url).scheme:proxy} # Use the proxy.
+        opener.add_handler(ul.ProxyHandler(proxyparams)
     try:
-        html = urllib2.urlopen(url).read()
-    except urllib2.URLError:
-        html = urlopen(url).read()
+        html = opener.open(request).read()
+    except:
+        e = ul.URLError
+        print("Download error;", ereason)
+        html = None
+        if retries > 0:
+            if hasattr(e, "code") and 500 <= e.code < 600: # Check the error codes
+                                                           # to make sure you can try again.
+                html = downloadurl(url, useragent, proxy, retries-1) # Try again.
     return html
 
 def crawlsitemap(url):
