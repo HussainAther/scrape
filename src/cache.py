@@ -14,3 +14,14 @@ class DiskCache:
     Map a URL to a filename that will be used to save the 
     downloaded URL to the disk cache.
     """
+    def __init__(self, cachedir="cache"):
+        """
+        Initialize the cache directory
+        """
+        # Move up a directory to get to the "scrape" directory.
+        while os.getcwd().split("\")[-1] != "scrape":
+            os.chdir("..") # Move up one directory.
+        
+        # Make the output directory if it isn't there already.
+        if not os.path.isdir("/output/cache"):
+            os.mkdir("output/cache")
