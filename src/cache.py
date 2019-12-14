@@ -25,3 +25,11 @@ class DiskCache:
         # Make the output directory if it isn't there already.
         if not os.path.isdir("/output/cache"):
             os.mkdir("output/cache")
+        
+        self.cachedir = cachedir
+        self.maxlen = maxlen
+    
+    def urltopath(self, url):
+        """
+        Create  file system path for this URL.
+        """
