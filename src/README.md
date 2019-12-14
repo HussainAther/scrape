@@ -4,6 +4,9 @@
     - Usage: `python bs4.py`
     - Requirements: Beautiful Soup (with `pip install bs4` or `sudo pip install bs4`).
 
+* `compare.py` : Compare the performance of each web scraper using a different function for each.
+    - Requirements: Beautiful Soup, [lxml](https://anaconda.org/anaconda/lxml).
+
 * `download.py` : This script has ways to download infomration from scraped results.
     - Usage: `python download.py`
 
@@ -21,7 +24,7 @@
 
 * `lxmltest.py` : Use the Lxml Python wrapper parsing library for parsing HTML.
     - Usage: `python lxmltest.py`
-    - Requirements: [lxml](https://anaconda.org/anaconda/lxml).
+    - Requirements: lxml.
 
 * `regex.py` : Use regular expressions to search through the HTML of a webpage from a list of URLs and a specific classtag given.
     - Usage: `python regex.py urlfile classtag`
