@@ -6,7 +6,7 @@
 
 * `browserrender.py` : Render a dynamic webpage and execute the JavaScript.
     - Usage: `python browserrender.py`
-    - Requirements: [PySide](https://anaconda.org/anaconda/pyside).
+    - Requirements: [lxml](https://anaconda.org/anaconda/lxml), [PySide](https://anaconda.org/anaconda/pyside).
 
 * `bs4test.py` : Sample code to run Beautiful Soup, which lets you navigate webpages.
     - Usage: `python bs4.py`
@@ -19,7 +19,7 @@
     - Usage `python callback.py`
 
 * `compare.py` : Compare the performance of each web scraper using a different function for each.
-    - Requirements: Beautiful Soup, [lxml](https://anaconda.org/anaconda/lxml).
+    - Requirements: Beautiful Soup, lxml.
 
 * `download.py` : This script has ways to download infomration from scraped results.
     - Usage: `python download.py`
