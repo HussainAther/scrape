@@ -1,4 +1,4 @@
-import builtwidth
+import builtwith
 import whois
 
 """
@@ -12,8 +12,9 @@ with open(sys.argv[1], "r") as file:
         urlllist.append(url.replace("\n", ""))
 
 # Parse each URL for the technology behind it.
-# This should give info about the frameworks, programming languages,
+# Builtwith should give info about the frameworks, programming languages,
 # and servers used in building each website.
+# WHOIS tells you who owns a website.
 for url in urllist:
     builtwithparse(url)
     print.whois.whois(url)
