@@ -1,4 +1,5 @@
 import builtwidth
+import whois
 
 """
 Identify the type of technology that was used to build a website. 
@@ -15,3 +16,4 @@ with open(sys.argv[1], "r") as file:
 # and servers used in building each website.
 for url in urllist:
     builtwithparse(url)
+    print.whois.whois(url)
