@@ -67,3 +67,18 @@ class DiskCache:
             os.makedir(folder)
         with open(path, "wb") as fp:
             fp.write(picke.dumps(result))
+
+    def has_expired(self, timestamp):
+        """
+        Return whether this timestamp has expired.
+        """
+        return datetime.utcnow() > timestamp + self.expires
+
+    def clear(self):
+        """
+        Remove all the cached values.
+        """
+        if os.path.exists(self.cachedir):
+            shutil.rmtree(self.cachedir)
+
+link_crawler("http://example.webscraping.com/", "/(index|view)", cache=DiskCache())
