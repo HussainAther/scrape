@@ -35,4 +35,10 @@ def bsscraper(html):
         results[field] = soup.find("table").find("tr", id="places_%s_row" % field).find("td", class_="w2p_fw").text
     return results
 
-
+def lxmlscraper(html):
+    """
+    lxml, mutatis mutandis.
+    """
+    tree = lxml.html.fromstring(html)
+    results = {}
+    for field 
