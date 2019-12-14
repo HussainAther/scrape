@@ -59,33 +59,55 @@ def crawlsitemap(url):
     links = re.findall("<loc>*.*?)</loc>", sitemap) # Extract the sitemap links.
     for link in links:
         html = downloadurl(link)
-      
-def crawllink(seedurl, linkregex, agentname, rp, maxdepth=5, scallback=None):
+    
+def crawllink(seedurl, linkregex=None, delay=5, maxdepth=-1, maxurls=-1, useragent="wswp", proxies=None, retries=1, scallback=None, cache=None):
     """
     Crawl from the given seed URL seedurl following links
     matched by linkregex for an agentname of the crawler and
     initialized robot parser. You can add a maxdepth to determine
     how many pages you will crawl. You can also add a scrape
     callback scallback to search multiple websites.
-    """ 
-    link = [] # for callback
-    if scallback:
-        links.extended(ScrapeCallBack(url, html) 
-    queue = [seedurl] # list of URLs to crawl
-    seen = set(queue) # list of seen links
-    while queue:
-        url = queue.pop()
-        html = downloadurl(url)
-        if rp.can_fetch(agentname, url)
-            for link in getlinks(htmls): # Filter for links matching regex.
-                if re.match(linkregex, link):
-                    link = urlparse.urljoin(seedurl, link)
-                    if link not in seen: # Check if we hvaen't seen this link.
-                        seen.add(link) # Add it to the list of seen links.
-                        queue.append(link) # Add it to the queue.
+    """
+    # the queue of URL's that still need to be crawled
+    crawl_queue = [seedurl]
+    # the URL's that have been seen and at what depth
+    seen = {seedurl: 0}
+    # track how many URL's have been downloaded
+    num_urls = 0
+    rp = get_robots(seedurl)
+    D = Downloader(delay=delay, useragent=useragent, proxies=proxies, retries=retries, cache=cache)
+    while crawl_queue:
+        url = crawl_queue.pop()
+        depth = seen[url]
+        # check url passes robots.txt restrictions
+        if rp.can_fetch(useragent, url):
+            html = D(url)
+            links = []
+            if scallback:
+                links.extend(scallback(url, html) or [])
+
+            if depth != maxdepth:
+                # can still crawl further
+                if linkregex:
+                    # filter for links matching our regular expression
+                    links.extend(link for link in get_links(html) if re.match(linkregex, link))
+
+                for link in links:
+                    link = normalize(seedurl, link)
+                    # check whether already crawled this link
+                    if link not in seen:
+                        seen[link] = depth + 1
+                        # check link is within same domain
+                        if same_domain(seedurl, link):
+                            # success! add this new link to queue
+                            crawl_queue.append(link)
+
+            # check whether have reached downloaded maximum
+            num_urls += 1
+            if num_urls == maxurls:
+                break
         else:
-            print("Blocked by robots.")
-             
+            print("Blocked by robots.txt:", url)
 
 def getlinks(html):
     """
@@ -161,7 +183,7 @@ class Downloader:
             self.cache[url] = result
         return result["html"]
  
-    def download(self, url, headers, proxy, num_retries, data=None):
+    def download(self, url, headers, proxy, retries, data=None):
         """
         Download and cache.
         """
@@ -180,7 +202,7 @@ class Downloader:
             html = ""
             if hasattr(e, "code"):
                 code = e.code
-                if num_retries > 0 and 500 <= code < 600:
+                if retries > 0 and 500 <= code < 600:
                     # retry 5XX HTTP errors
                     return self._get(url, headers, proxy, retries-1, data)
             else:
