@@ -58,4 +58,17 @@ numiter = 1000 # number of times to test (iterate through) each scraper
 # Download the HTML for UK.
 html = downloadurl("http://example.webscraping.com/places/default/view/United-Kingdom-239")
 
-
+for name, scraper in [("regex", rescraper), 
+                      ("BeautifulSoup", bsscraper),
+                      ("lxml", lxmlscraper)]
+    start = time.time() # Record the start time.
+    for i in range(numiter):
+        if scraper == rescraper:
+            re.purge()
+        result = scraper(html)
+        # Check the scraped result.
+        assert(result["area"] == "244,820 square kilometres") 
+    # Record the end time.
+    end = time.time()
+    # Print how long it took.
+    print("%s: %.2f seconds" % (name, end-start)) 
