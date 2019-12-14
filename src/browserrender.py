@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import csv
+import lxml.html
 import re
 import time
 
@@ -12,7 +13,6 @@ except ImportError:
     from PyQt4.QtGui import QApplication
     from PyQt4.QtCore import QUrl, QEventLoop, QTimer
     from PyQt4.QtWebKit import QWebView
-import lxml.html
 
 class BrowserRender(QWebView):  
     """
