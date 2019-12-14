@@ -18,6 +18,8 @@ except ImportError:
     import urllib2 as ul
     from urlparse import urlparse as ulp
 
+from callback import ScrapeCallBack
+
 """
 This script contains functions and code to download a webpage.
 """
@@ -57,13 +59,17 @@ def crawlsitemap(url):
     for link in links:
         html = downloadurl(link)
       
-def crawllink(seedurl, linkregex, agentname, rp, maxdepth=5):
+def crawllink(seedurl, linkregex, agentname, rp, maxdepth=5, scallback=None):
     """
     Crawl from the given seed URL seedurl following links
     matched by linkregex for an agentname of the crawler and
     initialized robot parser. You can add a maxdepth to determine
-    how many pages you will crawl.
+    how many pages you will crawl. You can also add a scrape
+    callback scallback to search multiple websites.
     """ 
+    link = [] # for callback
+    if scallback:
+        links.extended(ScrapeCallBack(url, html) 
     queue = [seedurl] # list of URLs to crawl
     seen = set(queue) # list of seen links
     while queue:
@@ -110,3 +116,9 @@ class Throttle:
                 time.sleep(sleepsecs) # sleep for a bit
             self.domains[domain] = datetime.datetime.now() # Update the last accessed time.
 
+url = "http://example.webscraping.com/"
+reparse = "/(index|view)"
+
+# Perform the link crawl with the ScrapeCallBack to output the data to 
+# a csv file.
+crawllink(url, reparse, -1, ScrapeCallBack())
