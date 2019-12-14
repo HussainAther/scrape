@@ -20,6 +20,10 @@
 * `download.py` : This script has ways to download infomration from scraped results.
     - Usage: `python download.py`
 
+* `facebook.py` : Navigate to a logged-in page on Facebook.
+    - Usage: `python username password url`
+    - Example: `python shussainather@gmail.com mypassword someurl` 
+
 * `identify.py` : This script identifies the basics of technology that a website uses for a given file with a list of URLs to analyze using the `builtwith` and `whois` packages.
     - Usage: `python identify.py urlfile`
     - Example; `python identify.py urllist.txt`
@@ -36,9 +40,11 @@
     - Usage: `python lxmltest.py`
     - Requirements: lxml.
 
-* `mongocache.py` : Use MongoDB to implement a cache system for scraping.
+* `mongocache.py` : Use MongoDB to implement a cache system for scraping with the pymongo wrapper.
     - Usage: `python mongocache.py`
     - Requirements: pymongo. 
+
+* `mongoqueue.py` : More MongoDB functionality for creating cache systems. This script lets you queue jobs.
 
 * `regex.py` : Use regular expressions to search through the HTML of a webpage from a list of URLs and a specific classtag given.
     - Usage: `python regex.py urlfile classtag`
