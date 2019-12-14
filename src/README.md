@@ -4,6 +4,9 @@
     - Usage: `python bs4.py`
     - Requirements: Beautiful Soup (with `pip install bs4` or `sudo pip install bs4`).
 
+* `callback.py` : Output the scraped data to a csv file.
+    - Usage `python callback.py`
+
 * `compare.py` : Compare the performance of each web scraper using a different function for each.
     - Requirements: Beautiful Soup, [lxml](https://anaconda.org/anaconda/lxml).
 
