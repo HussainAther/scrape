@@ -17,7 +17,7 @@ def graph(pageid):
 
 if __name__ == "__main__":
     try:
-        page_id = sys.argv[1]
+        pageid = sys.argv[1]
     except IndexError:
-        page_id = "PacktPub"
+        pageid = "PacktPub"
     pprint.pprint(graph(pageid))
