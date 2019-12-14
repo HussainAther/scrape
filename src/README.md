@@ -1,10 +1,10 @@
 * `download.py` : This script has ways to download infomration from scraped results.
     - Usage: `python download.py`
 
-* `identify.py` : This script identifies the basics of technology that a website uses for a given file with a list of URLs to analyze.
+* `identify.py` : This script identifies the basics of technology that a website uses for a given file with a list of URLs to analyze using the `builtwith` and `whois` packages.
     - Usage: `python identify.py urlfile`
     - Example; `python identify.py urllist.txt`
-    - Requirements: [builtwith](https://anaconda.org/auto/python-builtwith)
+    - Requirements: [builtwith](https://anaconda.org/auto/python-builtwith), [whois](https://anaconda.org/auto/python-whois).
 
 * `indeedScrape.py` : This script scrapes Indeed for data science job postings for a given list of keywords and list of locations.
     - Usage: `python indeedScrape.py -k keywordsfile -l locationfile -r radius -m pagelimit`
