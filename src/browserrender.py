@@ -45,7 +45,7 @@ class BrowserRender(QWebView):
             return self.html()
         else:
             # timed out
-            print 'Request timed out:', url
+            print "Request timed out:", url
 
     def html(self):
         """
@@ -86,22 +86,22 @@ class BrowserRender(QWebView):
             matches = self.find(pattern)
             if matches:
                 return matches
-        print 'Wait load timed out'
+        print "Wait load timed out"
 
 
 def main(): 
     br = BrowserRender()
-    br.open('http://example.webscraping.com/search')
-    br.attr('#search_term', 'value', '.')
-    br.text('#page_size option:checked', '1000')
-    br.click('#search')
+    br.open("http://example.webscraping.com/search")
+    br.attr("#search_term", "value", ".")
+    br.text("#page_size option:checked", "1000")
+    br.click("#search")
 
-    elements = br.wait_load('#results a')
-    writer = csv.writer(open('countries.csv', 'w'))
+    elements = br.wait_load("#results a")
+    writer = csv.writer(open("countries.csv", "w"))
     for country in [e.toPlainText().strip() for e in elements]:
         writer.writerow([country])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
