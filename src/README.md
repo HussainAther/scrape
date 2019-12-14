@@ -1,5 +1,9 @@
 # Scrape Tools
 
+* `alexacb.py` : Callback function for the top sites by Alexa rank.
+    - Usagea: `python alexacb.py`
+    - Requirements: pymongo (with `pip install pymongo` or `sudo pip install pymongo). 
+
 * `bs4test.py` : Sample code to run Beautiful Soup, which lets you navigate webpages.
     - Usage: `python bs4.py`
     - Requirements: Beautiful Soup (with `pip install bs4` or `sudo pip install bs4`).
@@ -34,7 +38,7 @@
 
 * `mongocache.py` : Use MongoDB to implement a cache system for scraping.
     - Usage: `python mongocache.py`
-    - Requirements: pymongo (with `pip install pymongo` or `sudo pip install pymongo). 
+    - Requirements: pymongo. 
 
 * `regex.py` : Use regular expressions to search through the HTML of a webpage from a list of URLs and a specific classtag given.
     - Usage: `python regex.py urlfile classtag`
