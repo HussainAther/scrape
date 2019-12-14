@@ -27,4 +27,4 @@ numiter = 1000 # number of iterations (times) to test each scraper
 for url in urllist:
     html = downloadurl(url)
     for line in html:
-        with open("output/
+        with open("output/ 
