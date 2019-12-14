@@ -122,3 +122,8 @@ reparse = "/(index|view)"
 # Perform the link crawl with the ScrapeCallBack to output the data to 
 # a csv file.
 crawllink(url, reparse, -1, ScrapeCallBack())
+
+class Downloader:
+    """
+    Download while supporting cached files.
+    """
