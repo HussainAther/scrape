@@ -28,7 +28,7 @@ This script contains functions and code to download a webpage.
 def downloadurl(url, useragent="wswp", proxy=None, retries=2):
     """
     Pass a URL to download it and return the HTML.
-    You can also run this function with a speciifc useragent, proxy, and 
+    You can also run this function with a specific useragent, proxy, and 
     different number of retries.
     """
     print("Downloading:", url)
@@ -159,4 +159,30 @@ class Downloader:
             result = self.downloadurl(url, headers, proxy, self.retries)
         if self.cache:
             self.cache[url] = result
-        return result["html"] 
+        return result["html"]
+ 
+    def download(self, url, headers, proxy, num_retries, data=None):
+        """
+        Download and cache.
+        """
+        print("Downloading:", url)
+        request = ul.request(url, headers=headers) # Form the request.
+        opener = ul.request.opener() 
+        if proxy:
+            proxyparams = {ulp.urlparse(url).scheme:proxy} # Use the proxy.
+            opener.add_handler(ul.ProxyHandler(proxyparams)
+        try:
+            response = opener.open(request)
+            html = response.read()
+            code = response.code
+        except Exception as e:
+            print("Download error:", str(e))
+            html = ""
+            if hasattr(e, "code"):
+                code = e.code
+                if num_retries > 0 and 500 <= code < 600:
+                    # retry 5XX HTTP errors
+                    return self._get(url, headers, proxy, retries-1, data)
+            else:
+                code = None
+        return {"html": html, "code": code}
