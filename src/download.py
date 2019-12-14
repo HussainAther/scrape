@@ -2,6 +2,14 @@ import re
 import urllib2
 import urlparse
 
+# In Python 3, robotparser is part of urllib.
+# In Python 2, it is its own module. Try to check
+# which one works.
+try:
+    from urllib.robotparser import robotparser as rp
+except ImportError:
+    import robotparser as rp
+
 """
 This script contains functions and code to download a webpage.
 """
@@ -27,18 +35,22 @@ def crawlsitemap(url):
     for link in links:
         html = downloadurl(link)
       
-def crawllink(seedurl, linkregex):
+def crawllink(seedurl, linkregex, agentname, rp):
     """
     Crawl from the given seed URL seedurl following links
-    matched by linkregex.
+    matched by linkregex for an agentname of the crawler and
+    initialized robot parser.
     """ 
     queue = [seedurl]
     while queue:
         url = queue.pop()
         html = downloadurl(url)
-        for link in getlinks(htmls): # Filter for links matching regex.
-            if re.match(linkregex, link):
-                quete.append(link)
+        if rp.can_fetch(agentname, url)
+            for link in getlinks(htmls): # Filter for links matching regex.
+                if re.match(linkregex, link):
+                    queue.append(link)
+        else:
+            print("Blocked by robots.")
 
 def getlinks(html):
     """
