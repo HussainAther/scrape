@@ -1,11 +1,15 @@
+import time
 import lxml.html
 import re
 
 from bs4 import BeautifulSoup
+from download import downloadurl
 
 """
 Evaluate the trade-offs of the three scraping approaches
 by comparing their relative efficiency using Firebug.
+
+First, implement each scraper with one function for each.
 """
 
 fields = ("area", "population", "iso", "country", "capital",
@@ -44,3 +48,14 @@ def lxmlscraper(html):
     for field in fields:
         results[field] = tree.cssselect("table > tr#plcaes_%s_row > td.w2p_fw" % field)[0].text_content()
     return results 
+
+"""
+Now, iterate through HTML for each scraper.
+"""
+
+numiter = 1000 # number of times to test (iterate through) each scraper
+
+# Download the HTML for UK.
+html = downloadurl("http://example.webscraping.com/places/default/view/United-Kingdom-239")
+
+
