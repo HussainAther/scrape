@@ -127,3 +127,7 @@ class Downloader:
     """
     Download while supporting cached files.
     """
+    def __init__(self, delay=5, useragent="wswp", proxies=None, retries=1, cache=None):
+        """
+        Initialize the throttle delay while downloading.
+        """
