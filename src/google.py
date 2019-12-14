@@ -1,13 +1,23 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import urllib
 import urlparse
 import lxml.html
-from downloader import Downloader
+import sys
 
+from download import Downloader
+
+try:
+    import urllib as ul
+    import urllib.parse as ulp 
+except ImportError:
+    import urllib2 as ul
+    from urlparse import urlparse as ulp
 
 def search(keyword):
+    """
+    Google search for a keyword.
+    """
     D = Downloader()
     url = 'https://www.google.com/search?q=' + urllib.quote_plus(keyword)
     html = D(url)
