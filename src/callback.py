@@ -1,4 +1,5 @@
 import csv
+import re
 
 """
 This callback class and function scrapes the country data
@@ -28,5 +29,14 @@ class ScrapeCallBack:
                        "languages", "neighbours")
         self.writer.writerow(self.fields)
 
-    def __call__(self, urll, html):
-    
+    def __call__(self, url, html):
+        """
+        Check if we need to call the function again.
+        """
+        # Use regex to search the url for "/view" 
+        if re.search("/view/", url):
+            tree = lxml.html.fromstring(html)
+            row = []
+            for field in self.fields:
+                row.append(tree.cssselect("table > tr#places_{}_row_row > td.w2p_fw".format(field))[0].text_content())
+            self.writer.writerow(row)
