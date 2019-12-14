@@ -4,6 +4,9 @@
     - Usage: `python bs4.py`
     - Requirements: Beautiful Soup (with `pip install bs4` or `sudo pip install bs4`).
 
+* `cache.py` : Create cache directories of what you want to download.
+    - Uasge: `python cache.py`
+
 * `callback.py` : Output the scraped data to a csv file.
     - Usage `python callback.py`
 
@@ -28,6 +31,10 @@
 * `lxmltest.py` : Use the Lxml Python wrapper parsing library for parsing HTML.
     - Usage: `python lxmltest.py`
     - Requirements: lxml.
+
+* `mongocache.py` : Use MongoDB to implement a cache system for scraping.
+    - Usage: `python mongocache.py`
+    - Requirements: pymongo (with `pip install pymongo` or `sudo pip install pymongo). 
 
 * `regex.py` : Use regular expressions to search through the HTML of a webpage from a list of URLs and a specific classtag given.
     - Usage: `python regex.py urlfile classtag`
