@@ -8,3 +8,6 @@
     - Uses Beautiful Soup to clean the document to get the HTML we need and Selenium for launching and using the browser.
     - Before running the script, you must create and use a new environment in which we install the required packages. `indeedScrape.py` requires a new conda environment to deal with package consistencies. We use the files listed in `indeedrequirements.txt` in the new environment. To create a new conda environment, use `conda create --name indeed` to create an environment called "indeed." To activate the environment, use `conda activate indeed.` Then use `conda config --add channel conda-forge` then `conda config --add channel anaconda` to add the channels we need. Finally, use `conda install --file indeedrequirements.txt` to download the required packages of the `indeedScrape.py` file.
 
+* `results.py` : Scrape results from the web using an input file with a list of URLs to scrape.
+    - Usage: `python results.py urlfile`
+    - Example: `python results.py urllist.txt`
