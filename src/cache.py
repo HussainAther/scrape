@@ -1,6 +1,11 @@
 import pickle
 import re
 import os
+import shutil
+import zlib
+
+from datetime import datetime. timedelta
+from download import crawllink
 
 # Check import to make sure it works with the Python version
 try:
@@ -43,7 +48,7 @@ class DiskCache:
     
     def urltopath(self, url):
         """
-        Create  file system path for this URL.
+        Create file system path for this URL.
         """
         components = ulp.urlsplit(url)
         path = components.path # Append index.html to empty paths
@@ -61,12 +66,16 @@ class DiskCache:
         """
         Load data from disk for this URL.
         """
-        path = self.urltopath(url)
+        path = self.url_to_path(url)
         if os.path.exists(path):
             with open(path, "rb") as fp:
-                return pickle.load(fp)
-        else:
-            raise KeyError(url + " does not exist") # URL has not been cached.
+                data = fp.read()
+                if self.compress:
+                    data = zlib.decompress(data)
+                result, timestamp = pickle.loads(data)
+                if self.hasexpired(timestamp):
+                    raise KeyError(url + " has expired") # URL has not been cached
+                return result
     
     def __setitem__(self, url, result):
         """
@@ -79,7 +88,7 @@ class DiskCache:
         with open(path, "wb") as fp:
             fp.write(picke.dumps(result))
 
-    def has_expired(self, timestamp):
+    def hasexpired(self, timestamp):
         """
         Return whether this timestamp has expired.
         """
@@ -92,4 +101,4 @@ class DiskCache:
         if os.path.exists(self.cachedir):
             shutil.rmtree(self.cachedir)
 
-link_crawler("http://example.webscraping.com/", "/(index|view)", cache=DiskCache())
+crawllink("http://example.webscraping.com/", "/(index|view)", cache=DiskCache())
