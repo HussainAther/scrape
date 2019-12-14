@@ -1,8 +1,12 @@
 # Scrape Tools
 
 * `alexacb.py` : Callback function for the top sites by Alexa rank.
-    - Usagea: `python alexacb.py`
+    - Usage: `python alexacb.py`
     - Requirements: pymongo (with `pip install pymongo` or `sudo pip install pymongo). 
+
+* `browserrender.py` : Render a dynamic webpage and execute the JavaScript.
+    - Usage: `python browserrender.py`
+    - Requirements: [PySide](https://anaconda.org/anaconda/pyside).
 
 * `bs4test.py` : Sample code to run Beautiful Soup, which lets you navigate webpages.
     - Usage: `python bs4.py`
