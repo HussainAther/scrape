@@ -1,3 +1,4 @@
+import pickle
 import re
 import os
 
@@ -43,4 +44,20 @@ class DiskCache:
         # Replace invalid characters.
         filename = re.sub("[^/0-9a-zA-Z\-.,;_]", "_", filename)
         filename = "/".join(segment[:250] for segment in filename.split("/"))
-        return os.path.join(self.cachedir,filename) 
+        return os.path.join(self.cachedir,filename)
+
+    def __getitem__(self, url):
+        """
+        Load data from disk for this URL.
+        """
+        path = self.urltopath(url)
+        if os.path.exists(path):
+            with open(path, "rb") as fp:
+                return pickle.load(fp)
+        else:
+            raise KeyError(url + " does not exist") # URL has not been cached.
+    
+    def __setitem__(self, url, result):
+        """
+        Save data to disk for this URL.
+        """ 
