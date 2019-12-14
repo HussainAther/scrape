@@ -19,4 +19,7 @@ fixedhtml = soup.prettify()
 # Print the results.
 print(fixedhtml)
 
-
+# Use the find() and findall() methods to navigate
+# to the elements we want.
+ul = soup.find("ul", attrs={"class":"country"})
+ul.find("li") # Return the first match. 
