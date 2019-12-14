@@ -74,12 +74,16 @@ class BrowserRender(QWebView):
             e.setPlainText(value)
 
     def click(self, pattern):
-        """Click matching elements"""
+        """
+        Click matching elements.
+        """
         for e in self.find(pattern):
             e.evaluateJavaScript("this.click()")
 
-    def wait_load(self, pattern, timeout=60):
-        """Wait for this pattern to be found in webpage and return matches"""
+    def waitload(self, pattern, timeout=60):
+        """
+        Wait for this pattern to be found in webpage and return matches.
+        """
         deadline = time.time() + timeout
         while time.time() < deadline:
             self.app.processEvents()
@@ -96,11 +100,10 @@ def main():
     br.text("#page_size option:checked", "1000")
     br.click("#search")
 
-    elements = br.wait_load("#results a")
+    elements = br.waitload("#results a")
     writer = csv.writer(open("countries.csv", "w"))
     for country in [e.toPlainText().strip() for e in elements]:
         writer.writerow([country])
-
 
 if __name__ == "__main__":
     main()
