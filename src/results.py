@@ -10,8 +10,9 @@ Scrape the results of downloaded webpages.
 
 # Extract each URL from the list of URLs
 urllist = [] # list of URLs from the input
-for url in sys.argv[1]:
-    urlllist.append(url.replace("\n", ""))
+with open(sys.argv[1], "r") as file:
+    for line in file:
+        urlllist.append(url.replace("\n", ""))
 
 # Move up a directory to get to the "scrape" directory.
 while os.getcwd().split("\")[-1] != "scrape":
