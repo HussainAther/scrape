@@ -1,6 +1,8 @@
 import csv
 import re
 
+from download import crawllink
+
 """
 This callback class and function scrapes the country data
 and saves it in a readable csv format. The callback lets you
@@ -10,14 +12,6 @@ handle multiple websites by using the function after certain events
 In this case, the callback will take a url and html parameters and return
 a list of more URLs to crawl.
 """
-
-# Move up a directory to get to the "scrape" directory.
-while os.getcwd().split("\")[-1] != "scrape":
-    os.chdir("..") # Move up one directory.
-
-# Make the output directory if it isn't there already.
-if not os.path.isdir("/output/countries"):
-    os.mkdir("output/countries")
 
 class ScrapeCallBack:
     """
@@ -37,6 +31,14 @@ class ScrapeCallBack:
         """
         Check if we need to call the function again.
         """
+        # Move up a directory to get to the "scrape" directory.
+        while os.getcwd().split("\")[-1] != "scrape":
+            os.chdir("..") # Move up one directory.
+        
+        # Make the output directory if it isn't there already.
+        if not os.path.isdir("/output/countries"):
+            os.mkdir("output/countries")
+        
         # Use regex to search the url for "/view" 
         if re.search("/view/", url):
             tree = lxml.html.fromstring(html)
@@ -44,3 +46,4 @@ class ScrapeCallBack:
             for field in self.fields:
                 row.append(tree.cssselect("table > tr#places_{}_row_row > td.w2p_fw".format(field))[0].text_content())
             self.writer.writerow(row)
+
