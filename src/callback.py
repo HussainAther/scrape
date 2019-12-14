@@ -22,3 +22,11 @@ class ScrapeCallBack:
         """
         Initialize the writer and fields.
         """
+        self.fields = ("area", "population", "iso", "country", "capital",
+                       "continent', "tld", "currency_code", "currency_name",
+                       "phone", "postal_code_format", "postal_code"regex",
+                       "languages", "neighbours")
+        self.writer.writerow(self.fields)
+
+    def __call__(self, urll, html):
+    
