@@ -4,6 +4,7 @@
 * `identify.py` : This script identifies the basics of technology that a website uses for a given file with a list of URLs to analyze.
     - Usage: `python identify.py urlfile`
     - Example; `python identify.py urllist.txt`
+    - Requirements: [builtwith](https://anaconda.org/auto/python-builtwith)
 
 * `indeedScrape.py` : This script scrapes Indeed for data science job postings for a given list of keywords and list of locations.
     - Usage: `python indeedScrape.py -k keywordsfile -l locationfile -r radius -m pagelimit`
