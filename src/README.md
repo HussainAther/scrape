@@ -28,6 +28,9 @@
 * `facebookgraph.py` : Create a graph based on each Facebook page visited for a specific page ID. 
     - Usage: `python ID` 
 
+* `google.py` : Perform a simple Google Search on a keyword.
+    - Usage: `python google.py keyword`
+
 * `identify.py` : This script identifies the basics of technology that a website uses for a given file with a list of URLs to analyze using the `builtwith` and `whois` packages.
     - Usage: `python identify.py urlfile`
     - Example; `python identify.py urllist.txt`
