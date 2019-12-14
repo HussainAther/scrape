@@ -15,6 +15,10 @@ a list of more URLs to crawl.
 while os.getcwd().split("\")[-1] != "scrape":
     os.chdir("..") # Move up one directory.
 
+# Make the output directory if it isn't there already.
+if not os.path.isdir("/output/countries"):
+    os.mkdir("output/countries")
+
 class ScrapeCallBack:
     """
     A class to add a scrape callback parameter
